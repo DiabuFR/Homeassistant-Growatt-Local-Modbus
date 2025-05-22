@@ -103,6 +103,7 @@ ATTR_GRID_FREQUENCY = "grid_frequency"  # Hz
 ATTR_TEMPERATURE = "inverter_temperature"  # C
 ATTR_IPM_TEMPERATURE = "ipm_temperature"  # C
 ATTR_BOOST_TEMPERATURE = "boost_temperature"  # C
+ATTR_COMM_TEMPERATURE = "comm_temperature"  # C
 
 ATTR_P_BUS_VOLTAGE = "p_bus_voltage"  # V
 ATTR_N_BUS_VOLTAGE = "n_bus_voltage"  # V

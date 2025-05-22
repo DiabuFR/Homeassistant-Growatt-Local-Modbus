@@ -234,7 +234,7 @@ def process_registers(
         register_values: dict[int, int]
 ) -> dict[str, Any]:
     """
-    Processes the register value corisponding to the given register dict.
+    Processes the register value corresponding to the given register dict.
     returns a dict of name and value
     """
     result: dict[str, Any] = {}

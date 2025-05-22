@@ -436,12 +436,10 @@ def get_register_information(GrowattDeviceType: DeviceTypes) -> DeviceRegisters:
         holding_register = {
             obj.register: obj for obj in TL_XH_HOLDING_REGISTERS_120
         }
+
         input_register = {
-            obj.register: obj for obj in INPUT_REGISTERS_120
-        }
-        input_register.update({
             obj.register: obj for obj in TL_XH_INPUT_REGISTERS_120
-        })
+        }
     elif GrowattDeviceType == DeviceTypes.STORAGE_120:
         max_length = MAXIMUM_DATA_LENGTH_120
         holding_register = {
