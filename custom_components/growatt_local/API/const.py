@@ -14,6 +14,7 @@ class DeviceTypes(str, Enum):
     INVERTER_120 = "inverter_120"
     STORAGE_120 = "storage_120"
     HYBRIDE_120 = "hybride_120"
+    TL_XH_120 = "tl-xh_120"
     INVERTER_315 = "inverter_315"
     OFFGRID_SPF = "offgrid_SPF"
 

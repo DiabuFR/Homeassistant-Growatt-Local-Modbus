@@ -25,7 +25,7 @@ from .base import (
     ATTR_PAC_TO_USER_TOTAL,
 )
 
-MAXIMUM_DATA_LENGTH = 100
+MAXIMUM_DATA_LENGTH_120 = 100
 
 
 def model(registers) -> str:

@@ -317,3 +317,7 @@ INPUT_REGISTERS_120: tuple[GrowattDeviceRegisters, ...] = (
         name=ATTR_OUTPUT_REACTIVE_ENERGY_TOTAL, register=236, value_type=float, length=2,
     ),
 )
+
+INPUT_REGISTERS_120_TL_X: tuple[GrowattDeviceRegisters, ...] = (
+
+)

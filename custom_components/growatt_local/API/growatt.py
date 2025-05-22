@@ -37,6 +37,7 @@ from .device_type.base import (
 )
 from .device_type.inverter_120 import MAXIMUM_DATA_LENGTH_120, HOLDING_REGISTERS_120, INPUT_REGISTERS_120
 from .device_type.storage_120 import STORAGE_HOLDING_REGISTERS_120, STORAGE_INPUT_REGISTERS_120
+from .device_type.tl_xh_120 import MAXIMUM_DATA_LENGTH_120, TL_XH_HOLDING_REGISTERS_120, TL_XH_INPUT_REGISTERS_120
 from .device_type.inverter_315 import MAXIMUM_DATA_LENGTH_315, HOLDING_REGISTERS_315, INPUT_REGISTERS_315
 from .device_type.offgrid import INPUT_REGISTERS_OFFGRID, offgrid_status
 
@@ -430,6 +431,17 @@ def get_register_information(GrowattDeviceType: DeviceTypes) -> DeviceRegisters:
         input_register.update({
             obj.register: obj for obj in STORAGE_INPUT_REGISTERS_120
         })
+    elif GrowattDeviceType == DeviceTypes.TL_XH_120:
+        max_length = MAXIMUM_DATA_LENGTH_120
+        holding_register = {
+            obj.register: obj for obj in TL_XH_HOLDING_REGISTERS_120
+        }
+        input_register = {
+            obj.register: obj for obj in INPUT_REGISTERS_120
+        }
+        input_register.update({
+            obj.register: obj for obj in TL_XH_INPUT_REGISTERS_120
+        })
     elif GrowattDeviceType == DeviceTypes.STORAGE_120:
         max_length = MAXIMUM_DATA_LENGTH_120
         holding_register = {
@@ -449,7 +461,7 @@ async def get_device_info(device: GrowattModbusBase, unit: int, fixed_device_typ
     minimal_length = min((MAXIMUM_DATA_LENGTH_120, MAXIMUM_DATA_LENGTH_315))
 
     if fixed_device_types is not None:
-        if fixed_device_types in (DeviceTypes.INVERTER_120, DeviceTypes.HYBRIDE_120, DeviceTypes.STORAGE_120):
+        if fixed_device_types in (DeviceTypes.INVERTER_120, DeviceTypes.HYBRIDE_120, DeviceTypes.STORAGE_120, DeviceTypes.TL_XH_120):
             return await device.get_device_info(HOLDING_REGISTERS_120, minimal_length, unit)
         elif fixed_device_types in (DeviceTypes.INVERTER_315, DeviceTypes.OFFGRID_SPF):
             return await device.get_device_info(HOLDING_REGISTERS_315, minimal_length, unit)

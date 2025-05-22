@@ -65,7 +65,7 @@ async def async_setup_entry(
 
     device_type = DeviceTypes(config_entry.data[CONF_TYPE])
 
-    if device_type in (DeviceTypes.INVERTER, DeviceTypes.INVERTER_315, DeviceTypes.INVERTER_120, DeviceTypes.HYBRIDE_120):
+    if device_type in (DeviceTypes.INVERTER, DeviceTypes.INVERTER_315, DeviceTypes.INVERTER_120, DeviceTypes.HYBRIDE_120, DeviceTypes.TL_XH_120):
         for sensor in INVERTER_SENSOR_TYPES:
             if sensor.key not in supported_key_names:
                 continue
@@ -92,7 +92,7 @@ async def async_setup_entry(
 
             sensor_descriptions.append(sensor)
 
-    if device_type in (DeviceTypes.HYBRIDE_120, DeviceTypes.STORAGE_120):
+    if device_type in (DeviceTypes.HYBRIDE_120, DeviceTypes.STORAGE_120, DeviceTypes.TL_XH_120):
         for sensor in STORAGE_SENSOR_TYPES:
             if sensor.key not in supported_key_names:
                 continue
@@ -101,7 +101,7 @@ async def async_setup_entry(
 
     if device_type in (DeviceTypes.INVERTER, DeviceTypes.INVERTER_315, DeviceTypes.INVERTER_120):
         power_sensor = (ATTR_INPUT_POWER, ATTR_OUTPUT_POWER)
-    elif device_type in (DeviceTypes.HYBRIDE_120, ):
+    elif device_type in (DeviceTypes.HYBRIDE_120, DeviceTypes.TL_XH_120 ):
         power_sensor = (ATTR_INPUT_POWER, ATTR_OUTPUT_POWER,
                         ATTR_SOC_PERCENTAGE, ATTR_DISCHARGE_POWER, ATTR_CHARGE_POWER,
                         ATTR_PAC_TO_USER_TOTAL, ATTR_PAC_TO_GRID_TOTAL)

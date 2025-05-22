@@ -200,6 +200,7 @@ DEVICE_TYPE_CODES = {
     10002: "Web-ShinePano",
     10003: "Web-ShineWebBox",
     10004: "WL-WIFI Module",
+    11001: "Confluence box 1"
 }
 
 
