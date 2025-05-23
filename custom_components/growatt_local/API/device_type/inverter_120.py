@@ -14,7 +14,6 @@ from .base import (
     ATTR_DERATING_MODE,
     ATTR_FAULT_CODE,
     ATTR_WARNING_CODE,
-    ATTR_WARNING_VALUE,
     ATTR_INPUT_POWER,
     ATTR_INPUT_ENERGY_TOTAL,
     ATTR_INPUT_1_VOLTAGE,
@@ -316,8 +315,4 @@ INPUT_REGISTERS_120: tuple[GrowattDeviceRegisters, ...] = (
     GrowattDeviceRegisters(
         name=ATTR_OUTPUT_REACTIVE_ENERGY_TOTAL, register=236, value_type=float, length=2,
     ),
-)
-
-INPUT_REGISTERS_120_TL_X: tuple[GrowattDeviceRegisters, ...] = (
-
 )

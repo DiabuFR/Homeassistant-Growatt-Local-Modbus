@@ -228,7 +228,7 @@ class GrowattLocalCoordinator(DataUpdateCoordinator):
         else:
             self._counter = self._max_counter = 0
 
-        # Storage/Hybride devices are always active while inverters are only active when the sun is up.
+        # Storage/Hybrid devices are always active while inverters are only active when the sun is up.
         if self.growatt_api.device not in (DeviceTypes.HYBRIDE_120, DeviceTypes.OFFGRID_SPF, DeviceTypes.TL_XH_120):
             self._sun_is_down = self.sun_down()
 
@@ -268,7 +268,7 @@ class GrowattLocalCoordinator(DataUpdateCoordinator):
             self._failed_update_count = 0
         except ConnectionException:
             if self._failed_update_count % 60 == 0:
-                _LOGGER.warning("Modbus connection got interupted retrying to reconnect", exc_info=True)
+                _LOGGER.warning("Modbus connection got interrupted retrying to reconnect", exc_info=True)
                 await self.growatt_api.connect()
             self._failed_update_count += 1
             status = "not_connected"

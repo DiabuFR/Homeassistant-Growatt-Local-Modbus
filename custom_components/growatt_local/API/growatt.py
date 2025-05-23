@@ -371,11 +371,15 @@ class GrowattDevice:
         for register in self.input_register.values():
             if register.name == name:
                 return register
+            return None
+        return None
 
     def get_holding_register_by_name(self, name: str) -> Optional[GrowattDeviceRegisters]:
         for register in self.holding_register.values():
             if register.name == name:
                 return register
+            return None
+        return None
 
     def get_register_names(self) -> set[str]:
         names = {register.name for register in self.input_register.values()}

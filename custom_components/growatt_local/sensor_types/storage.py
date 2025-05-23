@@ -8,7 +8,7 @@ from homeassistant.components.sensor import (
 from homeassistant.const import (
     UnitOfEnergy,
     UnitOfPower,
-    PERCENTAGE,
+    PERCENTAGE, UnitOfTemperature, UnitOfElectricCurrent, UnitOfElectricPotential,
 )
 from .sensor_entity_description import GrowattSensorEntityDescription
 from .switch_entity_description import GrowattSwitchEntityDescription
@@ -27,7 +27,8 @@ from ..API.device_type.base import (
     ATTR_CHARGE_ENERGY_TODAY,
     ATTR_CHARGE_ENERGY_TOTAL,
     ATTR_PAC_TO_GRID_TOTAL,
-    ATTR_PAC_TO_USER_TOTAL,
+    ATTR_PAC_TO_USER_TOTAL, ATTR_FLAGS, ATTR_NTC_TEMPERATURE, ATTR_BB_TEMPERATURE, ATTR_BATTERY_CURRENT,
+    ATTR_BATTERY_VOLTAGE, ATTR_WARNING_CODE, ATTR_FAULT_CODE, ATTR_WORKING_MODE,
 )
 
 STORAGE_SWITCH_TYPES: tuple[GrowattSwitchEntityDescription, ...] = (
@@ -137,3 +138,86 @@ STORAGE_SENSOR_TYPES: tuple[GrowattSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.POWER,
     ),
 )
+
+def bms_sensors(bdc_id:int) -> tuple[GrowattSensorEntityDescription, ...]:
+    from custom_components.growatt_local.API.device_type.tl_xh_120 import BMS_PREFIX_FMT
+    key_prefix = BMS_PREFIX_FMT.format(bdc_id)
+    name_prefix = "BMS {:d} ".format(bdc_id)
+    return (
+        GrowattSensorEntityDescription(
+            # TODO: Render as string
+            key=key_prefix + ATTR_WORKING_MODE,
+            name=name_prefix + "Working Mode",
+        ),
+        GrowattSensorEntityDescription(
+            # TODO: Render as string
+            key=key_prefix + ATTR_FAULT_CODE,
+            name=name_prefix + "Fault Code",
+        ),
+        GrowattSensorEntityDescription(
+            # TODO: Render as string
+            key=key_prefix + ATTR_WARNING_CODE,
+            name=name_prefix+"Warning Code",
+        ),
+        GrowattSensorEntityDescription(
+            key=key_prefix+ATTR_BATTERY_VOLTAGE,
+            name=name_prefix+"Voltage",
+            native_unit_of_measurement=UnitOfElectricPotential.VOLT,
+            device_class=SensorDeviceClass.VOLTAGE,
+        ),
+        GrowattSensorEntityDescription(
+            key=key_prefix+ATTR_BATTERY_CURRENT,
+            name=name_prefix+"Amperage",
+            native_unit_of_measurement=UnitOfElectricCurrent.AMPERE ,
+            device_class=SensorDeviceClass.CURRENT,
+        ),
+        GrowattSensorEntityDescription(
+            key=key_prefix+ATTR_SOC_PERCENTAGE,
+            name=name_prefix+"SOC",
+            native_unit_of_measurement=PERCENTAGE,
+            device_class=SensorDeviceClass.BATTERY
+        ),
+        GrowattSensorEntityDescription(
+            key=key_prefix+ATTR_NTC_TEMPERATURE,
+            name=name_prefix+"NTC Temperature",
+            native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+            device_class=SensorDeviceClass.TEMPERATURE,
+        ),
+        GrowattSensorEntityDescription(
+            key=key_prefix+ATTR_BB_TEMPERATURE,
+            name=name_prefix+"BB Temperature",
+            native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+            device_class=SensorDeviceClass.TEMPERATURE,
+        ),
+        GrowattSensorEntityDescription(
+            key=key_prefix+ATTR_DISCHARGE_POWER,
+            name=name_prefix+"Discharge Power".format(bdc_id),
+            native_unit_of_measurement=UnitOfPower.WATT,
+            device_class=SensorDeviceClass.POWER
+        ),
+        GrowattSensorEntityDescription(
+            key=key_prefix+ATTR_CHARGE_POWER,
+            name=name_prefix+"Charge Power".format(bdc_id),
+            native_unit_of_measurement=UnitOfPower.WATT,
+            device_class=SensorDeviceClass.POWER
+        ),
+        GrowattSensorEntityDescription(
+            key=key_prefix+ATTR_DISCHARGE_ENERGY_TOTAL,
+            name=name_prefix+"Discharged (Total)".format(bdc_id),
+            native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+            device_class=SensorDeviceClass.ENERGY,
+            state_class=SensorStateClass.TOTAL_INCREASING,
+        ),
+        GrowattSensorEntityDescription(
+            key=key_prefix+ATTR_CHARGE_ENERGY_TOTAL,
+            name=name_prefix+"Charged (Total)".format(bdc_id),
+            native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+            device_class=SensorDeviceClass.ENERGY,
+            state_class=SensorStateClass.TOTAL_INCREASING,
+        ),
+        GrowattSensorEntityDescription(
+            # TODO: Render better
+            key=key_prefix+ATTR_FLAGS,
+            name=name_prefix+"Flags",
+        ),
+    )

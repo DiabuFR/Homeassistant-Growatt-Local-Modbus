@@ -38,7 +38,7 @@ from .API.device_type.base import (
 from .sensor_types.sensor_entity_description import GrowattSensorEntityDescription
 from .sensor_types.offgrid import OFFGRID_SENSOR_TYPES
 from .sensor_types.inverter import INVERTER_SENSOR_TYPES
-from .sensor_types.storage import STORAGE_SENSOR_TYPES
+from .sensor_types.storage import STORAGE_SENSOR_TYPES, bms_sensors
 from .const import (
     CONF_AC_PHASES,
     CONF_DC_STRING,
@@ -98,6 +98,15 @@ async def async_setup_entry(
                 continue
 
             sensor_descriptions.append(sensor)
+
+    if device_type is DeviceTypes.TL_XH_120:
+        # TODO: Detect BMS count
+        for sensor in bms_sensors(1) + bms_sensors(2):
+            if sensor.key not in supported_key_names:
+                continue
+
+            sensor_descriptions.append(sensor)
+
 
     if device_type in (DeviceTypes.INVERTER, DeviceTypes.INVERTER_315, DeviceTypes.INVERTER_120):
         power_sensor = (ATTR_INPUT_POWER, ATTR_OUTPUT_POWER)

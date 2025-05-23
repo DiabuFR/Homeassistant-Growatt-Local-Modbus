@@ -78,7 +78,7 @@ from ..API.device_type.base import (
     ATTR_GRID_FREQUENCY,
     ATTR_TEMPERATURE,
     ATTR_IPM_TEMPERATURE,
-    ATTR_OUTPUT_PERCENTAGE,
+    ATTR_OUTPUT_PERCENTAGE, ATTR_BOOST_TEMPERATURE, ATTR_COMM_TEMPERATURE,
 )
 
 INVERTER_POWER_SWITCH: GrowattSwitchEntityDescription = GrowattSwitchEntityDescription(
@@ -468,7 +468,19 @@ INVERTER_SENSOR_TYPES: tuple[GrowattSensorEntityDescription, ...] = (
     ),
     GrowattSensorEntityDescription(
         key=ATTR_TEMPERATURE,
-        name="Temperature",
+        name="Inverter Temperature",
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        device_class=SensorDeviceClass.TEMPERATURE,
+    ),
+    GrowattSensorEntityDescription(
+        key=ATTR_BOOST_TEMPERATURE,
+        name="Boost Temperature",
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        device_class=SensorDeviceClass.TEMPERATURE,
+    ),
+    GrowattSensorEntityDescription(
+        key=ATTR_COMM_TEMPERATURE,
+        name="Communication board Temperature",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         device_class=SensorDeviceClass.TEMPERATURE,
     ),

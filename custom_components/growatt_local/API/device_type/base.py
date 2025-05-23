@@ -23,6 +23,7 @@ ATTR_DERATING_MODE = "derating_mode"
 ATTR_FAULT_CODE = "fault_code"
 ATTR_WARNING_CODE = "warning_code"
 ATTR_WARNING_VALUE = "warning_value"
+ATTR_WORKING_MODE = "working_mode"
 
 ATTR_INPUT_POWER = "input_power"  # W
 ATTR_INPUT_ENERGY_TOTAL = "input_energy_total"  # kWh
@@ -134,12 +135,18 @@ ATTR_CHARGE_ENERGY_TOTAL = "charge_energy_total"  # kWh
 ATTR_ACTIVE_POWER = "output_active_power"  # W
 
 ATTR_BATTERY_VOLTAGE = "battery_voltage"  # V
+ATTR_BATTERY_CURRENT = "battery_current"  # A
 ATTR_BUS_VOLTAGE = "bus_voltage"  # V
 ATTR_OUTPUT_FREQUENCY = "output_frequency"  # Hz
 ATTR_OUTPUT_DC_VOLTAGE = "output_dc_voltage"  # V
 
 ATTR_DC_TEMPERATURE = "dc_dc_temperature"  # C
 ATTR_LOAD_PERCENTAGE = "load_percent"  # %
+
+ATTR_NTC_TEMPERATURE = "ntc_temperature"
+ATTR_BB_TEMPERATURE = "bb_temperature"
+ATTR_FLAGS = "flags"
+ATTR_BMS_HEALTH = "bms_health"
 
 ATTR_BATTERY_P_VOLTAGE = "battery_port_voltage"  # V
 ATTR_BATTERY_B_VOLTAGE = "battery_bus_voltage"  # V
