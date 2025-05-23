@@ -179,7 +179,8 @@ class GrowattDeviceRegisters:
     register: int
     value_type: type
     length: int = 1
-    scale: int = 10
+    scale: int = 10 # For floats
+    divider: int = 1 # For ints (TODO Commonize with scale)
     function: Callable | None = None
 
 

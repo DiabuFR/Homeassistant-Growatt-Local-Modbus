@@ -245,7 +245,7 @@ def process_registers(
             continue
 
         if register.value_type == int:
-            result[register.name] = value
+            result[register.name] = value / register.divider
 
         elif register.value_type == float and register.length == 2:
             if (second_value := register_values.get(key + 1, None)) is None:

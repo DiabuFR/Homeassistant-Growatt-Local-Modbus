@@ -233,8 +233,8 @@ def add_bms(bdc_id: int, reg_offset: int) -> tuple[GrowattDeviceRegisters, ...]:
         GrowattDeviceRegisters(name=prefix+ATTR_WORKING_MODE,           register=reg_offset+0, value_type=int),
         GrowattDeviceRegisters(name=prefix+ATTR_FAULT_CODE,             register=reg_offset+1, value_type=int),
         GrowattDeviceRegisters(name=prefix+ATTR_WARNING_CODE,           register=reg_offset+2, value_type=int),
-        GrowattDeviceRegisters(name=prefix+ATTR_BATTERY_VOLTAGE,        register=reg_offset+3, value_type=int),
-        GrowattDeviceRegisters(name=prefix+ATTR_BATTERY_CURRENT,        register=reg_offset+4, value_type=int),
+        GrowattDeviceRegisters(name=prefix+ATTR_BATTERY_VOLTAGE,        register=reg_offset+3, value_type=int, divider=10),
+        GrowattDeviceRegisters(name=prefix+ATTR_BATTERY_CURRENT,        register=reg_offset+4, value_type=int, divider=10),
         GrowattDeviceRegisters(name=prefix+ATTR_SOC_PERCENTAGE,         register=reg_offset+5, value_type=int),
         # Vbus1 => 6
         # Vbus2 => 7
