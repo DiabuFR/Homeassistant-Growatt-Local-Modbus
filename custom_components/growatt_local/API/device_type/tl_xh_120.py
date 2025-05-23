@@ -32,7 +32,7 @@ from .base import (
     ATTR_INPUT_4_VOLTAGE, ATTR_INPUT_3_POWER, ATTR_INPUT_3_AMPERAGE, ATTR_INPUT_3_VOLTAGE, ATTR_INPUT_2_POWER,
     ATTR_INPUT_2_AMPERAGE, ATTR_INPUT_2_VOLTAGE, ATTR_INPUT_1_POWER, ATTR_INPUT_1_AMPERAGE, ATTR_INPUT_1_VOLTAGE,
     ATTR_STATUS_CODE, ATTR_BATTERY_VOLTAGE, ATTR_BATTERY_CURRENT, ATTR_WORKING_MODE, ATTR_NTC_TEMPERATURE,
-    ATTR_BB_TEMPERATURE, ATTR_FLAGS, ATTR_BMS_HEALTH,
+    ATTR_BB_TEMPERATURE, ATTR_FLAGS, ATTR_BMS_HEALTH, ATTR_BDC_STATE, ATTR_UPS_ENABLED,
 )
 
 MAXIMUM_DATA_LENGTH_120 = 100
@@ -68,6 +68,11 @@ TL_XH_HOLDING_REGISTERS_120: tuple[GrowattDeviceRegisters, ...] = (
         value_type=int,
         length=1
     ),
+    GrowattDeviceRegisters(
+        name=ATTR_UPS_ENABLED,
+        register=3079,
+        value_type=bool,
+    )
 )
 
 TL_XH_INPUT_REGISTERS_120: tuple[GrowattDeviceRegisters, ...] = (
@@ -215,6 +220,9 @@ TL_XH_INPUT_REGISTERS_120: tuple[GrowattDeviceRegisters, ...] = (
     GrowattDeviceRegisters(name=ATTR_DISCHARGE_ENERGY_TOTAL, register=3127, value_type=float, length=2),
     GrowattDeviceRegisters(name=ATTR_CHARGE_ENERGY_TODAY, register=3129, value_type=float, length=2),
     GrowattDeviceRegisters(name=ATTR_CHARGE_ENERGY_TOTAL, register=3131, value_type=float, length=2),
+    # Optional features
+    ## ATTR_BDC_STATE 0->No BDC 1->BDC 1 2->BDC 2 3->both
+    GrowattDeviceRegisters(name=ATTR_BDC_STATE, register=3118, value_type=int),
 )
 
 # BMS (=BDC) helpers
@@ -243,3 +251,5 @@ def add_bms(bdc_id: int, reg_offset: int) -> tuple[GrowattDeviceRegisters, ...]:
 
 TL_XH_INPUT_REGISTERS_120 += add_bms(1, 3166)
 TL_XH_INPUT_REGISTERS_120 += add_bms(2, 3189)
+
+# TODO: Add SYN/UPS fields

@@ -16,6 +16,9 @@ ATTR_MODBUS_VERSION = "modbus version"
 ATTR_INVERTER_ENABLED = "inverter_enabled"
 ATTR_AC_CHARGE_ENABLED = "ac_charge_enabled"
 
+# Attribute names for optional features in the holding register
+ATTR_UPS_ENABLED = "ups_enabled"
+
 # Attribute names for values in the input register
 ATTR_STATUS = "status"
 ATTR_STATUS_CODE = "status_code"
@@ -147,6 +150,7 @@ ATTR_NTC_TEMPERATURE = "ntc_temperature"
 ATTR_BB_TEMPERATURE = "bb_temperature"
 ATTR_FLAGS = "flags"
 ATTR_BMS_HEALTH = "bms_health"
+ATTR_BDC_STATE = "bdc_state"
 
 ATTR_BATTERY_P_VOLTAGE = "battery_port_voltage"  # V
 ATTR_BATTERY_B_VOLTAGE = "battery_bus_voltage"  # V
