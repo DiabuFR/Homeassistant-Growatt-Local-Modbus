@@ -245,6 +245,10 @@ def process_registers(
             continue
 
         if register.value_type == int:
+            # TODO: Generalize for any int length
+            if register.length == 1 and (value >> 15) == 1:
+                # Value is negative
+                value += ~0xFFFF
             result[register.name] = value / register.divider
 
         elif register.value_type == float and register.length == 2:
