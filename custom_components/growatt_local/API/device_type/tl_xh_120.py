@@ -52,14 +52,14 @@ BMS_STATUS = {
     0x03: "Flash",
 }
 
-def bms_mode_status(registers) -> (str | None):
+def bms_mode_status(register) -> (str | None):
     mode = "Unknown"
     status = "Unknown"
 
-    if (registers[0] >> 8) in BMS_MODE.keys():
-        mode = BMS_MODE[registers[0] >>8]
-    if (registers[0] & 0xFF) in BMS_STATUS.keys():
-        status = BMS_STATUS[registers[0]  & 0xFF]
+    if (register >> 8) in BMS_MODE.keys():
+        mode = BMS_MODE[register >> 8]
+    if (register & 0xFF) in BMS_STATUS.keys():
+        status = BMS_STATUS[register & 0xFF]
 
     return f'{status} ({mode})'
 
