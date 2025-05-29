@@ -150,7 +150,7 @@ ATTR_NTC_TEMPERATURE = "ntc_temperature"
 ATTR_BB_TEMPERATURE = "bb_temperature"
 ATTR_FLAGS = "flags"
 ATTR_BMS_HEALTH = "bms_health"
-ATTR_BDC_STATE = "bdc_state"
+ATTR_BMS_STATE = "bdc_state"
 
 ATTR_BATTERY_P_VOLTAGE = "battery_port_voltage"  # V
 ATTR_BATTERY_B_VOLTAGE = "battery_bus_voltage"  # V

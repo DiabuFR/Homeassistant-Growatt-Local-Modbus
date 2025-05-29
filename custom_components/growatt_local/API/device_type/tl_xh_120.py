@@ -32,10 +32,34 @@ from .base import (
     ATTR_INPUT_4_VOLTAGE, ATTR_INPUT_3_POWER, ATTR_INPUT_3_AMPERAGE, ATTR_INPUT_3_VOLTAGE, ATTR_INPUT_2_POWER,
     ATTR_INPUT_2_AMPERAGE, ATTR_INPUT_2_VOLTAGE, ATTR_INPUT_1_POWER, ATTR_INPUT_1_AMPERAGE, ATTR_INPUT_1_VOLTAGE,
     ATTR_STATUS_CODE, ATTR_BATTERY_VOLTAGE, ATTR_BATTERY_CURRENT, ATTR_WORKING_MODE, ATTR_NTC_TEMPERATURE,
-    ATTR_BB_TEMPERATURE, ATTR_FLAGS, ATTR_BMS_HEALTH, ATTR_BDC_STATE, ATTR_UPS_ENABLED,
+    ATTR_BB_TEMPERATURE, ATTR_FLAGS, ATTR_BMS_HEALTH, ATTR_BMS_STATE, ATTR_UPS_ENABLED, ATTR_STATUS,
 )
 
 MAXIMUM_DATA_LENGTH_120 = 100
+
+BMS_MODE = {
+    0x00: "Standby",
+    0x01: "Charging",
+    0x02: "Discharging",
+}
+
+BMS_STATUS = {
+    0x00: "Standby",
+    0x01: "Normal",
+    0x02: "Fault",
+    0x03: "Flash",
+}
+
+def bms_mode_status(registers) -> (str | None):
+    mode = "Unknown"
+    status = "Unknown"
+
+    if (registers[0] >> 8) in BMS_MODE.keys():
+        mode = BMS_MODE[registers[0] >>8]
+    if (registers[0] & 0xFF) in BMS_STATUS.keys():
+        status = BMS_STATUS[registers[0]  & 0xFF]
+
+    return f'{status} ({mode})'
 
 def model(registers) -> str:
     mo = (registers[0] << 16) + registers[1]
@@ -221,16 +245,16 @@ TL_XH_INPUT_REGISTERS_120: tuple[GrowattDeviceRegisters, ...] = (
     GrowattDeviceRegisters(name=ATTR_CHARGE_ENERGY_TODAY, register=3129, value_type=float, length=2),
     GrowattDeviceRegisters(name=ATTR_CHARGE_ENERGY_TOTAL, register=3131, value_type=float, length=2),
     # Optional features
-    ## ATTR_BDC_STATE 0->No BDC 1->BDC 1 2->BDC 2 3->both
-    GrowattDeviceRegisters(name=ATTR_BDC_STATE, register=3118, value_type=int),
+    ## ATTR_BMS_STATE 0->No BMS 1->BMS 1 2->BMS 2 3->both
+    GrowattDeviceRegisters(name=ATTR_BMS_STATE, register=3118, value_type=int),
 )
 
 # BMS (=BDC) helpers
-BMS_PREFIX_FMT= "bdc{:d}_"
-def add_bms(bdc_id: int, reg_offset: int) -> tuple[GrowattDeviceRegisters, ...]:
-    prefix = BMS_PREFIX_FMT.format(bdc_id)
+BMS_PREFIX_FMT= "bms{:d}_"
+def add_bms(bms_id: int, reg_offset: int) -> tuple[GrowattDeviceRegisters, ...]:
+    prefix = BMS_PREFIX_FMT.format(bms_id)
     return (
-        GrowattDeviceRegisters(name=prefix+ATTR_WORKING_MODE,           register=reg_offset+0, value_type=int),
+        GrowattDeviceRegisters(name=prefix+ATTR_WORKING_MODE,           register=reg_offset+0, value_type=custom_function, function=bms_mode_status),
         GrowattDeviceRegisters(name=prefix+ATTR_FAULT_CODE,             register=reg_offset+1, value_type=int),
         GrowattDeviceRegisters(name=prefix+ATTR_WARNING_CODE,           register=reg_offset+2, value_type=int),
         GrowattDeviceRegisters(name=prefix+ATTR_BATTERY_VOLTAGE,        register=reg_offset+3, value_type=int, divider=10),

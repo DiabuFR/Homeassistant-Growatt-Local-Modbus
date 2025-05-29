@@ -289,7 +289,7 @@ class GrowattLocalCoordinator(DataUpdateCoordinator):
         await self.async_request_refresh()
 
     async def sunrise(self):
-        """Callback function when sunrise occours."""
+        """Callback function when sunrise occurs."""
         _LOGGER.info("System waking up on sunrise")
         self.update_interval = self.interval
         self._sun_is_down = False
