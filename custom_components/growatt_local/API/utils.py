@@ -245,7 +245,7 @@ def process_registers(
             continue
 
         if register.available is not None:
-            if not register.available(result):
+            if not register.available(register_values):
                 continue
 
         if register.value_type == int:

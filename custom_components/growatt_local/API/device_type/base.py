@@ -151,7 +151,7 @@ ATTR_NTC_TEMPERATURE = "ntc_temperature"
 ATTR_BB_TEMPERATURE = "bb_temperature"
 ATTR_FLAGS = "flags"
 ATTR_BMS_HEALTH = "bms_health"
-ATTR_BMS_STATE = "bdc_state"
+ATTR_BMS_STATE = "bms_state"
 
 ATTR_BATTERY_P_VOLTAGE = "battery_port_voltage"  # V
 ATTR_BATTERY_B_VOLTAGE = "battery_bus_voltage"  # V
@@ -183,7 +183,7 @@ class GrowattDeviceRegisters:
     scale: int = 10 # For floats
     divider: int = 1 # For ints (TODO Commonize with scale)
     function: Callable | None = None
-    available: Callable[[dict[str, Any]], bool] | None = None
+    available: Callable[[dict[int, int]], bool] | None = None
 
 
 @dataclass
