@@ -1,3 +1,5 @@
+from typing import Any
+
 from .base import (
     GrowattDeviceRegisters,
     custom_function,
@@ -252,25 +254,30 @@ TL_XH_INPUT_REGISTERS_120: tuple[GrowattDeviceRegisters, ...] = (
 # BMS (=BDC) helpers
 BMS_PREFIX_FMT= "bms{:d}_"
 def add_bms(bms_id: int, reg_offset: int) -> tuple[GrowattDeviceRegisters, ...]:
+    def bms_connected(reg_values: dict[str, Any]) -> bool:
+        # BMS STATE is a flag where each bit is set to 1 if the corresponding BMS is connected
+        bms_bit = 1 << (bms_id-1)
+        return (reg_values[ATTR_BMS_STATE] & bms_bit) > 0
+
     prefix = BMS_PREFIX_FMT.format(bms_id)
     return (
-        GrowattDeviceRegisters(name=prefix+ATTR_WORKING_MODE,           register=reg_offset+0, value_type=custom_function, function=bms_mode_status),
-        GrowattDeviceRegisters(name=prefix+ATTR_FAULT_CODE,             register=reg_offset+1, value_type=int),
-        GrowattDeviceRegisters(name=prefix+ATTR_WARNING_CODE,           register=reg_offset+2, value_type=int),
-        GrowattDeviceRegisters(name=prefix+ATTR_BATTERY_VOLTAGE,        register=reg_offset+3, value_type=int, divider=10),
-        GrowattDeviceRegisters(name=prefix+ATTR_BATTERY_CURRENT,        register=reg_offset+4, value_type=int, divider=10),
-        GrowattDeviceRegisters(name=prefix+ATTR_SOC_PERCENTAGE,         register=reg_offset+5, value_type=int),
+        GrowattDeviceRegisters(name=prefix+ATTR_WORKING_MODE,           available=bms_connected, register=reg_offset+0, value_type=custom_function, function=bms_mode_status),
+        GrowattDeviceRegisters(name=prefix+ATTR_FAULT_CODE,             available=bms_connected, register=reg_offset+1, value_type=int),
+        GrowattDeviceRegisters(name=prefix+ATTR_WARNING_CODE,           available=bms_connected, register=reg_offset+2, value_type=int),
+        GrowattDeviceRegisters(name=prefix+ATTR_BATTERY_VOLTAGE,        available=bms_connected, register=reg_offset+3, value_type=int, divider=10),
+        GrowattDeviceRegisters(name=prefix+ATTR_BATTERY_CURRENT,        available=bms_connected, register=reg_offset+4, value_type=int, divider=10),
+        GrowattDeviceRegisters(name=prefix+ATTR_SOC_PERCENTAGE,         available=bms_connected, register=reg_offset+5, value_type=int),
         # Vbus1 => 6
         # Vbus2 => 7
         # Buck-boost current => 8
         # LLC current => 9
-        GrowattDeviceRegisters(name=prefix+ATTR_NTC_TEMPERATURE,        register=reg_offset+10, value_type=float),
-        GrowattDeviceRegisters(name=prefix+ATTR_BB_TEMPERATURE,         register=reg_offset+11, value_type=float),
-        GrowattDeviceRegisters(name=prefix+ATTR_DISCHARGE_POWER,        register=reg_offset+12, value_type=float, length=2),
-        GrowattDeviceRegisters(name=prefix+ATTR_CHARGE_POWER,           register=reg_offset+14, value_type=float, length=2),
-        GrowattDeviceRegisters(name=prefix+ATTR_DISCHARGE_ENERGY_TOTAL, register=reg_offset+16, value_type=float, length=2),
-        GrowattDeviceRegisters(name=prefix+ATTR_CHARGE_ENERGY_TOTAL,    register=reg_offset+18, value_type=float, length=2),
-        GrowattDeviceRegisters(name=prefix+ATTR_FLAGS,                  register=reg_offset+21, value_type=int),
+        GrowattDeviceRegisters(name=prefix+ATTR_NTC_TEMPERATURE,        available=bms_connected, register=reg_offset+10, value_type=float),
+        GrowattDeviceRegisters(name=prefix+ATTR_BB_TEMPERATURE,         available=bms_connected, register=reg_offset+11, value_type=float),
+        GrowattDeviceRegisters(name=prefix+ATTR_DISCHARGE_POWER,        available=bms_connected, register=reg_offset+12, value_type=float, length=2),
+        GrowattDeviceRegisters(name=prefix+ATTR_CHARGE_POWER,           available=bms_connected, register=reg_offset+14, value_type=float, length=2),
+        GrowattDeviceRegisters(name=prefix+ATTR_DISCHARGE_ENERGY_TOTAL, available=bms_connected, register=reg_offset+16, value_type=float, length=2),
+        GrowattDeviceRegisters(name=prefix+ATTR_CHARGE_ENERGY_TOTAL,    available=bms_connected, register=reg_offset+18, value_type=float, length=2),
+        GrowattDeviceRegisters(name=prefix+ATTR_FLAGS,                  available=bms_connected, register=reg_offset+21, value_type=int),
     )
 
 TL_XH_INPUT_REGISTERS_120 += add_bms(1, 3166)

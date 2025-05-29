@@ -24,7 +24,7 @@ Currently the communication layer (API) is included in this repository but follo
 
 Customizable control of the update rate of sensor values.
 * A scan interval of all information.
-* A seperate scan inverval of main power values
+* A separate scan interval of main power values
 
 For inverters a optional switch can be set active if you want control when the inverter may produces power to the grid.
 

@@ -145,7 +145,6 @@ def bms_sensors(bdc_id:int) -> tuple[GrowattSensorEntityDescription, ...]:
     name_prefix = "BMS {:d} ".format(bdc_id)
     return (
         GrowattSensorEntityDescription(
-            # TODO: Render as string
             key=key_prefix + ATTR_WORKING_MODE,
             name=name_prefix + "Working Mode",
         ),

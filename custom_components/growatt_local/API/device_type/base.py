@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Callable
+from typing import Any
+from collections.abc import Callable
 
 # Attribute names for values in the holding register
 ATTR_FIRMWARE = "firmware"
@@ -182,6 +183,7 @@ class GrowattDeviceRegisters:
     scale: int = 10 # For floats
     divider: int = 1 # For ints (TODO Commonize with scale)
     function: Callable | None = None
+    available: Callable[[dict[str, Any]], bool] | None = None
 
 
 @dataclass
@@ -314,7 +316,7 @@ for i in range(1, 24):
 
 
 def inverter_status(value: dict[str, Any]) -> str | None:
-    """Returns status based on multiple registery values."""
+    """Returns status based on multiple registry values."""
     if ATTR_STATUS_CODE not in value.keys():
         return None
 

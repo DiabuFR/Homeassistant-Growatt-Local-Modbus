@@ -244,6 +244,10 @@ def process_registers(
         if (register := registers.get(key)) is None:
             continue
 
+        if register.available is not None:
+            if not register.available(result):
+                continue
+
         if register.value_type == int:
             # TODO: Generalize for any int length
             if register.length == 1 and (value >> 15) == 1:

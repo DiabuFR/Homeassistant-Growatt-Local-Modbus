@@ -32,7 +32,7 @@ from .API.device_type.base import (
     ATTR_SOC_PERCENTAGE,
     ATTR_LOAD_PERCENTAGE,
     ATTR_PAC_TO_USER_TOTAL,
-    ATTR_PAC_TO_GRID_TOTAL,
+    ATTR_PAC_TO_GRID_TOTAL, ATTR_BATTERY_VOLTAGE, ATTR_BATTERY_CURRENT,
 )
 
 from .sensor_types.sensor_entity_description import GrowattSensorEntityDescription
@@ -115,6 +115,13 @@ async def async_setup_entry(
         power_sensor = (ATTR_INPUT_POWER, ATTR_OUTPUT_POWER,
                         ATTR_SOC_PERCENTAGE, ATTR_DISCHARGE_POWER, ATTR_CHARGE_POWER,
                         ATTR_PAC_TO_USER_TOTAL, ATTR_PAC_TO_GRID_TOTAL)
+        # Add BMS power sensors
+        from custom_components.growatt_local.API.device_type.tl_xh_120 import BMS_PREFIX_FMT
+        for bms_id in range(1, 3):
+            prefix = BMS_PREFIX_FMT.format(bms_id)
+            power_sensor += (prefix+ATTR_DISCHARGE_POWER, prefix+ATTR_CHARGE_POWER,
+                             prefix+ATTR_BATTERY_VOLTAGE, prefix+ATTR_BATTERY_CURRENT)
+
     elif device_type in (DeviceTypes.STORAGE_120, ):
         power_sensor = (ATTR_SOC_PERCENTAGE, ATTR_DISCHARGE_POWER, ATTR_CHARGE_POWER)
     elif device_type == DeviceTypes.OFFGRID_SPF:
