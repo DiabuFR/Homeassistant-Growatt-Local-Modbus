@@ -257,7 +257,7 @@ def add_bms(bms_id: int, reg_offset: int) -> tuple[GrowattDeviceRegisters, ...]:
     def bms_connected(reg_values: dict[int, int]) -> bool:
         # BMS STATE is a flag where each bit is set to 1 if the corresponding BMS is connected
         bms_bit = 1 << (bms_id-1)
-        return (reg_values[3118] & bms_bit) > 0
+        return ( reg_values.get(3118, 0) & bms_bit) > 0
 
     prefix = BMS_PREFIX_FMT.format(bms_id)
     return (
