@@ -99,9 +99,10 @@ async def async_setup_entry(
 
             sensor_descriptions.append(sensor)
 
-    if device_type is DeviceTypes.TL_XH_120:
-        # TODO: Detect BMS count
-        for sensor in bms_sensors(1) + bms_sensors(2):
+    if device_type in DeviceTypes.TL_XH_120:
+        # TODO: Detect BMS count / SYN
+        optional_sensors = bms_sensors(1) + bms_sensors(2)
+        for sensor in optional_sensors:
             if sensor.key not in supported_key_names:
                 continue
 

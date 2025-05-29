@@ -352,8 +352,8 @@ class GrowattLocalCoordinator(DataUpdateCoordinator):
         self, names: Sequence[str], update_keys: bool = False
     ) -> RegisterKeys:
         """
-        Loopup modbus register values based on name.
-        Setting update_keys automaticly extends the list of keys to request.
+        Lookup modbus register values based on name.
+        Setting update_keys automatically extends the list of keys to request.
         """
         keys = self.growatt_api.get_keys_by_name(names)
         if update_keys:

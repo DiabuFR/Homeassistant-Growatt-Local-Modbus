@@ -293,7 +293,7 @@ class GrowattDevice:
 
     async def update(self, keys: RegisterKeys) -> dict[str, Any]:
         """
-        Based on the given keys it will generate one or multiple requests to get the corrisponding results
+        Based on the given keys it will generate one or multiple requests to get the corresponding results
         from both holding and input registers from the device.
 
         returns a dictionary of register name and value
