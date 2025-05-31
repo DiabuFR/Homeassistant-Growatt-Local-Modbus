@@ -83,8 +83,11 @@ class GrowattDeviceEntity(CoordinatorEntity, RestoreEntity, SelectEntity):
     async def async_added_to_hass(self) -> None:
         """Call when entity is about to be added to Home Assistant."""
         await super().async_added_to_hass()
-        state = await self.async_get_last_state()
-        self._attr_current_option = state.state
+        if state := await self.async_get_last_state():
+            self._attr_current_option = state.state
+            return
+        self._attr_current_option = None
+
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -97,7 +100,7 @@ class GrowattDeviceEntity(CoordinatorEntity, RestoreEntity, SelectEntity):
 
         value = int(state)
 
-        for oKey, oValue in self.entity_description.options_values:
+        for oKey, oValue in self.entity_description.options_values.items():
             if value != oValue:
                 continue
             self._attr_current_option =  oKey
