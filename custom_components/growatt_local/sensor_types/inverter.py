@@ -15,6 +15,8 @@ from homeassistant.const import (
     UnitOfTime,
     PERCENTAGE,
 )
+
+from .select_entity_description import GrowattSelectEntityDescription
 from .sensor_entity_description import GrowattSensorEntityDescription
 from .switch_entity_description import GrowattSwitchEntityDescription
 from ..API.device_type.base import (
@@ -78,7 +80,7 @@ from ..API.device_type.base import (
     ATTR_GRID_FREQUENCY,
     ATTR_TEMPERATURE,
     ATTR_IPM_TEMPERATURE,
-    ATTR_OUTPUT_PERCENTAGE, ATTR_BOOST_TEMPERATURE, ATTR_COMM_TEMPERATURE, ATTR_STATUS,
+    ATTR_OUTPUT_PERCENTAGE, ATTR_BOOST_TEMPERATURE, ATTR_COMM_TEMPERATURE, ATTR_STATUS, ATTR_BMS_STATE, ATTR_EMS_MODE,
 )
 
 INVERTER_POWER_SWITCH: GrowattSwitchEntityDescription = GrowattSwitchEntityDescription(
@@ -87,6 +89,21 @@ INVERTER_POWER_SWITCH: GrowattSwitchEntityDescription = GrowattSwitchEntityDescr
     state_on=0x1,
     state_off=0x0,
     mask=0x1,
+)
+
+EMS_MODES = {
+        "Disabled": 255,
+        "LoadFirst": 0,
+        "BatteryFirst": 1,
+        "GridFirst": 2,
+        "SolarOnly": 3,
+        "ChargeClipped": 4
+}
+INVERTER_EMS_MODE_SELECT: GrowattSelectEntityDescription = GrowattSelectEntityDescription(
+    key=ATTR_EMS_MODE,
+    name="EMS Mode",
+    options=list(EMS_MODES.keys()),
+    options_values=EMS_MODES,
 )
 
 INVERTER_SENSOR_TYPES: tuple[GrowattSensorEntityDescription, ...] = (
@@ -494,5 +511,5 @@ INVERTER_SENSOR_TYPES: tuple[GrowattSensorEntityDescription, ...] = (
         key=ATTR_STATUS,
         name="Status",
         device_class=f"growatt_local__status"
-    ),
+    )
 )

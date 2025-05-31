@@ -1,5 +1,7 @@
 from typing import Any
 
+from homeassistant.helpers.entity import EntityDescription
+
 from .base import (
     GrowattDeviceRegisters,
     custom_function,
@@ -34,7 +36,8 @@ from .base import (
     ATTR_INPUT_4_VOLTAGE, ATTR_INPUT_3_POWER, ATTR_INPUT_3_AMPERAGE, ATTR_INPUT_3_VOLTAGE, ATTR_INPUT_2_POWER,
     ATTR_INPUT_2_AMPERAGE, ATTR_INPUT_2_VOLTAGE, ATTR_INPUT_1_POWER, ATTR_INPUT_1_AMPERAGE, ATTR_INPUT_1_VOLTAGE,
     ATTR_STATUS_CODE, ATTR_BATTERY_VOLTAGE, ATTR_BATTERY_CURRENT, ATTR_WORKING_MODE, ATTR_NTC_TEMPERATURE,
-    ATTR_BB_TEMPERATURE, ATTR_FLAGS, ATTR_BMS_HEALTH, ATTR_BMS_STATE, ATTR_UPS_ENABLED, ATTR_STATUS,
+    ATTR_BB_TEMPERATURE, ATTR_FLAGS, ATTR_BMS_HEALTH, ATTR_BMS_STATE, ATTR_UPS_ENABLED,
+    ATTR_INVERTER_ENABLED, ATTR_EMS_MODE,
 )
 
 MAXIMUM_DATA_LENGTH_120 = 100
@@ -69,6 +72,11 @@ def model(registers) -> str:
 
 
 TL_XH_HOLDING_REGISTERS_120: tuple[GrowattDeviceRegisters, ...] = (
+    GrowattDeviceRegisters(
+        name=ATTR_INVERTER_ENABLED,
+        register=0,
+        value_type=int
+    ),
     FIRMWARE_REGISTER,
     GrowattDeviceRegisters(
         name=ATTR_SERIAL_NUMBER, register=3001, value_type=str, length=15
@@ -87,6 +95,11 @@ TL_XH_HOLDING_REGISTERS_120: tuple[GrowattDeviceRegisters, ...] = (
         register=88,
         value_type=float,
         scale=100
+    ),
+    GrowattDeviceRegisters(
+        name=ATTR_EMS_MODE,
+        register=608,
+        value_type=int,
     ),
     GrowattDeviceRegisters(
         name=ATTR_AC_CHARGE_ENABLED,
