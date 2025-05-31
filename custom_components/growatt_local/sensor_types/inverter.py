@@ -99,11 +99,13 @@ EMS_MODES = {
         "SolarOnly": 3,
         "ChargeClipped": 4
 }
-INVERTER_EMS_MODE_SELECT: GrowattSelectEntityDescription = GrowattSelectEntityDescription(
-    key=ATTR_EMS_MODE,
-    name="EMS Mode",
-    options=list(EMS_MODES.keys()),
-    options_values=EMS_MODES,
+INVERTER_SELECT_TYPES: tuple[GrowattSelectEntityDescription, ...] = (
+    GrowattSelectEntityDescription(
+        key=ATTR_EMS_MODE,
+        name="EMS Mode",
+        options=list(EMS_MODES.keys()),
+        options_values=EMS_MODES,
+    ),
 )
 
 INVERTER_SENSOR_TYPES: tuple[GrowattSensorEntityDescription, ...] = (

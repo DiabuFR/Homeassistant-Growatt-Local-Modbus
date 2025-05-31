@@ -18,7 +18,7 @@ from .const import (
     CONF_INVERTER_POWER_CONTROL,
     DOMAIN,
 )
-from .sensor_types.inverter import INVERTER_EMS_MODE_SELECT
+from .sensor_types.inverter import INVERTER_EMS_MODE_SELECT, INVERTER_SELECT_TYPES
 from .sensor_types.select_entity_description import GrowattSelectEntityDescription
 
 _LOGGER = logging.getLogger(__name__)
@@ -33,13 +33,12 @@ async def async_setup_entry(
 ) -> None:
     coordinator = hass.data[DOMAIN][config_entry.data[CONF_SERIAL_NUMBER]]
     entities = []
-    sensor_descriptions: list[GrowattSelectEntityDescription] = [
-        INVERTER_EMS_MODE_SELECT
-    ]
+    sensor_descriptions: list[GrowattSelectEntityDescription] = []
     supported_key_names = coordinator.growatt_api.get_register_names()
 
-    for sensor in sensor_descriptions:
+    for sensor in INVERTER_SELECT_TYPES:
         if sensor.key not in supported_key_names:
+            _LOGGER.warning("ignored select %s: missing register", sensor.key)
             continue
         sensor_descriptions.append(sensor)
 
