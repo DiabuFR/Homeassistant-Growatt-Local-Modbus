@@ -15,7 +15,6 @@ from homeassistant.helpers.update_coordinator import (
 from .const import (
     CONF_FIRMWARE,
     CONF_SERIAL_NUMBER,
-    CONF_INVERTER_POWER_CONTROL,
     DOMAIN,
 )
 from .sensor_types.inverter import INVERTER_SELECT_TYPES
@@ -84,8 +83,7 @@ class GrowattDeviceEntity(CoordinatorEntity, RestoreEntity, SelectEntity):
     async def async_added_to_hass(self) -> None:
         """Call when entity is about to be added to Home Assistant."""
         await super().async_added_to_hass()
-        if (state := await self.async_get_last_state()) is None:
-            return
+        state = await self.async_get_last_state()
         self._attr_current_option = state.state
 
     @callback
