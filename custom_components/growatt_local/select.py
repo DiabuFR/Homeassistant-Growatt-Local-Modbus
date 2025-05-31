@@ -18,7 +18,7 @@ from .const import (
     CONF_INVERTER_POWER_CONTROL,
     DOMAIN,
 )
-from .sensor_types.inverter import INVERTER_EMS_MODE_SELECT, INVERTER_SELECT_TYPES
+from .sensor_types.inverter import INVERTER_SELECT_TYPES
 from .sensor_types.select_entity_description import GrowattSelectEntityDescription
 
 _LOGGER = logging.getLogger(__name__)
