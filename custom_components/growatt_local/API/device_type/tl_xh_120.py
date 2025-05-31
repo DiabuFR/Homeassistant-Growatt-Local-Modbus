@@ -100,6 +100,7 @@ TL_XH_HOLDING_REGISTERS_120: tuple[GrowattDeviceRegisters, ...] = (
         name=ATTR_EMS_MODE,
         register=608,
         value_type=int,
+        length=1
     ),
     GrowattDeviceRegisters(
         name=ATTR_AC_CHARGE_ENABLED,
