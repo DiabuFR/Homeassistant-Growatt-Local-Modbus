@@ -369,6 +369,8 @@ class GrowattLocalCoordinator(DataUpdateCoordinator):
 
     async def write_register(self, key: str, payload):
         register = self.growatt_api.get_holding_register_by_name(key)
-        #TODO: better logging 
+        if register is None:
+            _LOGGER.error("Register %s not found", key)
+            return
         _LOGGER.debug("Device type key %s and register %d", register.name, register.register)
         await self.growatt_api.write_register(register.register, payload)
