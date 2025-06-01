@@ -13,7 +13,7 @@ from homeassistant.const import (
     UnitOfPower,
     UnitOfTemperature,
     UnitOfTime,
-    PERCENTAGE,
+    PERCENTAGE, EntityCategory,
 )
 
 from .select_entity_description import GrowattSelectEntityDescription
@@ -89,6 +89,7 @@ INVERTER_POWER_SWITCH: GrowattSwitchEntityDescription = GrowattSwitchEntityDescr
     state_on=0x1,
     state_off=0x0,
     mask=0x1,
+    entity_category=EntityCategory.CONFIG,
 )
 
 EMS_MODES = {
@@ -105,6 +106,7 @@ INVERTER_SELECT_TYPES: tuple[GrowattSelectEntityDescription, ...] = (
         name="EMS Mode",
         options=list(EMS_MODES.keys()),
         options_values=EMS_MODES,
+        entity_category=EntityCategory.CONFIG,
     ),
 )
 

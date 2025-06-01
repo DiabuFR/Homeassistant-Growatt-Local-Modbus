@@ -9,7 +9,6 @@ from homeassistant.components.sensor import SensorEntityDescription
 @dataclass
 class GrowattSensorRequiredKeysMixin:
     """Mixin for required keys."""
-
     key: str
     midnight_reset: bool = False
 
