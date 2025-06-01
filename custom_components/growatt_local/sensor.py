@@ -198,9 +198,12 @@ class GrowattDeviceEntity(CoordinatorEntity, RestoreEntity, SensorEntity):
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
-        if (state := self.coordinator.data.get(self.entity_description.key)) is None:
-            return
-        self._attr_native_value = state
+        state = self.coordinator.data.get(self.entity_description.key)
+        if state is not None:
+            self._attr_available = True
+            self._attr_native_value = state
+        else:
+            self._attr_available = False
         self.async_write_ha_state()
 
     @callback
