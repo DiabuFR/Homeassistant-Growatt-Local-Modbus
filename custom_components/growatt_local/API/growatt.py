@@ -16,7 +16,6 @@ from pymodbus.client.serial import AsyncModbusSerialClient
 from pymodbus.client.tcp import AsyncModbusTcpClient
 from pymodbus.client.udp import AsyncModbusUdpClient
 from pymodbus.framer import FramerType
-from pymodbus.payload import BinaryPayloadBuilder
 from pymodbus.pdu import ModbusPDU
 
 from .device_type.base import (
