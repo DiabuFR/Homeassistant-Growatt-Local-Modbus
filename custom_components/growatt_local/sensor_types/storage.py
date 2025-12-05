@@ -46,19 +46,22 @@ STORAGE_SENSOR_TYPES: tuple[GrowattSensorEntityDescription, ...] = (
         key=ATTR_SOC_PERCENTAGE,
         name="SOC",
         native_unit_of_measurement=PERCENTAGE,
-        device_class=SensorDeviceClass.BATTERY
+        device_class=SensorDeviceClass.BATTERY,
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     GrowattSensorEntityDescription(
         key=ATTR_DISCHARGE_POWER,
         name="Discharge Power",
         native_unit_of_measurement=UnitOfPower.WATT,
-        device_class=SensorDeviceClass.POWER
+        device_class=SensorDeviceClass.POWER,
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     GrowattSensorEntityDescription(
         key=ATTR_CHARGE_POWER,
         name="Charge Power",
         native_unit_of_measurement=UnitOfPower.WATT,
-        device_class=SensorDeviceClass.POWER
+        device_class=SensorDeviceClass.POWER,
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     GrowattSensorEntityDescription(
         key=ATTR_ENERGY_TO_GRID_TOTAL,
@@ -93,7 +96,7 @@ STORAGE_SENSOR_TYPES: tuple[GrowattSensorEntityDescription, ...] = (
     ),
     GrowattSensorEntityDescription(
         key=ATTR_AC_CHARGE_ENABLED,
-        name="AC Charge Enabled"
+        name="AC Charge Enabled",
     ),
     GrowattSensorEntityDescription(
         key=ATTR_DISCHARGE_ENERGY_TODAY,
@@ -130,12 +133,14 @@ STORAGE_SENSOR_TYPES: tuple[GrowattSensorEntityDescription, ...] = (
         name="AC to user total",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     GrowattSensorEntityDescription(
         key=ATTR_PAC_TO_GRID_TOTAL,
         name="AC to grid total",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
+        state_class=SensorStateClass.MEASUREMENT,
     ),
 )
 
@@ -163,12 +168,14 @@ def bms_sensors(bdc_id:int) -> tuple[GrowattSensorEntityDescription, ...]:
             name=name_prefix+"Voltage",
             native_unit_of_measurement=UnitOfElectricPotential.VOLT,
             device_class=SensorDeviceClass.VOLTAGE,
+            state_class=SensorStateClass.MEASUREMENT,
         ),
         GrowattSensorEntityDescription(
             key=key_prefix+ATTR_BATTERY_CURRENT,
             name=name_prefix+"Amperage",
             native_unit_of_measurement=UnitOfElectricCurrent.AMPERE ,
             device_class=SensorDeviceClass.CURRENT,
+            state_class=SensorStateClass.MEASUREMENT,
         ),
         GrowattSensorEntityDescription(
             key=key_prefix+ATTR_SOC_PERCENTAGE,
@@ -192,13 +199,15 @@ def bms_sensors(bdc_id:int) -> tuple[GrowattSensorEntityDescription, ...]:
             key=key_prefix+ATTR_DISCHARGE_POWER,
             name=name_prefix+"Discharge Power".format(bdc_id),
             native_unit_of_measurement=UnitOfPower.WATT,
-            device_class=SensorDeviceClass.POWER
+            device_class=SensorDeviceClass.POWER,
+            state_class=SensorStateClass.MEASUREMENT,
         ),
         GrowattSensorEntityDescription(
             key=key_prefix+ATTR_CHARGE_POWER,
             name=name_prefix+"Charge Power".format(bdc_id),
             native_unit_of_measurement=UnitOfPower.WATT,
-            device_class=SensorDeviceClass.POWER
+            device_class=SensorDeviceClass.POWER,
+            state_class=SensorStateClass.MEASUREMENT,
         ),
         GrowattSensorEntityDescription(
             key=key_prefix+ATTR_DISCHARGE_ENERGY_TOTAL,
