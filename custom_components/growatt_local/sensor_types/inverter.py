@@ -5,6 +5,9 @@ from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorStateClass,
 )
+from homeassistant.components.number.const import (
+    NumberDeviceClass,
+)
 from homeassistant.const import (
     UnitOfElectricCurrent,
     UnitOfElectricPotential,
@@ -16,11 +19,13 @@ from homeassistant.const import (
     PERCENTAGE, EntityCategory,
 )
 
+from .number_entity_description import GrowattNumberEntityDescription
 from .select_entity_description import GrowattSelectEntityDescription
 from .sensor_entity_description import GrowattSensorEntityDescription
 from .switch_entity_description import GrowattSwitchEntityDescription
 from ..API.device_type.base import (
     ATTR_INVERTER_ENABLED,
+    ATTR_OUTPUT_POWER_LIMIT,
     ATTR_INPUT_POWER,
     ATTR_INPUT_ENERGY_TOTAL,
     ATTR_INPUT_1_VOLTAGE,
@@ -80,7 +85,7 @@ from ..API.device_type.base import (
     ATTR_GRID_FREQUENCY,
     ATTR_TEMPERATURE,
     ATTR_IPM_TEMPERATURE,
-    ATTR_OUTPUT_PERCENTAGE, ATTR_BOOST_TEMPERATURE, ATTR_COMM_TEMPERATURE, ATTR_STATUS, ATTR_BMS_STATE, ATTR_EMS_MODE,
+    ATTR_OUTPUT_PERCENTAGE, ATTR_BOOST_TEMPERATURE, ATTR_COMM_TEMPERATURE, ATTR_STATUS, ATTR_EMS_MODE,
 )
 
 INVERTER_POWER_SWITCH: GrowattSwitchEntityDescription = GrowattSwitchEntityDescription(
@@ -90,6 +95,17 @@ INVERTER_POWER_SWITCH: GrowattSwitchEntityDescription = GrowattSwitchEntityDescr
     state_off=0x0,
     mask=0x1,
     entity_category=EntityCategory.CONFIG,
+)
+
+INVERTER_OUTPUT_POWER_LIMIT = GrowattNumberEntityDescription(
+    key=ATTR_OUTPUT_POWER_LIMIT,
+    name="Output Power Limit",
+    device_class=NumberDeviceClass.POWER_FACTOR,
+    native_unit_of_measurement=PERCENTAGE,
+    native_min_value=0,
+    native_max_value=100,
+    native_step=1,
+    icon="mdi:transmission-tower-export",
 )
 
 EMS_MODES = {

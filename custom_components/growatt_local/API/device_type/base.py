@@ -16,6 +16,7 @@ ATTR_MODBUS_VERSION = "modbus version"
 # Attribute names for values in the holding register
 ATTR_INVERTER_ENABLED = "inverter_enabled"
 ATTR_AC_CHARGE_ENABLED = "ac_charge_enabled"
+ATTR_OUTPUT_POWER_LIMIT = "output_power_limit"
 ATTR_EMS_MODE = "ems_mode"
 
 # Attribute names for optional features in the holding register

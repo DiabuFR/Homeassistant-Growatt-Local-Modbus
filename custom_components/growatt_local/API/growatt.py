@@ -455,7 +455,6 @@ def get_register_information(GrowattDeviceType: DeviceTypes) -> DeviceRegisters:
 
     return DeviceRegisters(holding_register, input_register, max_length)
 
-
 async def get_device_info(device: GrowattModbusBase, unit: int, fixed_device_types: DeviceTypes | None = None) -> GrowattDeviceInfo | None:
     # Needs to determine minimal maximum length as all devices need to be able to support this
     minimal_length = min((MAXIMUM_DATA_LENGTH_120, MAXIMUM_DATA_LENGTH_315))
