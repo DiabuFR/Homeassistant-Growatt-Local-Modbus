@@ -527,6 +527,13 @@ INVERTER_SENSOR_TYPES: tuple[GrowattSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     GrowattSensorEntityDescription(
+        key=ATTR_BACKUP_LOAD_POWER,
+        name="Backup load power",
+        native_unit_of_measurement=UnitOfPower.WATT,
+        device_class=SensorDeviceClass.POWER,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    GrowattSensorEntityDescription(
         key=ATTR_OUTPUT_REACTIVE_POWER,
         name="Reactive wattage",
         native_unit_of_measurement=UnitOfPower.WATT,
