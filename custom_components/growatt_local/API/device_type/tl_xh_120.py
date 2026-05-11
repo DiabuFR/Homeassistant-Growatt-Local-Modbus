@@ -263,7 +263,7 @@ TL_XH_INPUT_REGISTERS_120: tuple[GrowattDeviceRegisters, ...] = (
     # Optional features
     ## ATTR_BMS_STATE 0->No BMS 1->BMS 1 2->BMS 2 3->both
     GrowattDeviceRegisters(name=ATTR_BMS_STATE, register=3118, value_type=int),
-    GrowattDeviceRegisters(name=ATTR_BACKUP_LOAD_POWER, register=3297, value_type=int, divider=10),
+    GrowattDeviceRegisters(name=ATTR_BACKUP_LOAD_POWER, register=3298, value_type=int, length=2, divider=10),
 )
 
 # BMS (=BDC) helpers
